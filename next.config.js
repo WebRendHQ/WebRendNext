@@ -1,11 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    output: 'export',
-    images: {
-      unoptimized: true,
-    },
-    
-    basePath: '/WebRendNew',
-  }
+  output: 'export',
+  basePath: '/WebRendNew',
+  assetPrefix: '/WebRendNew/',
+}
   
   module.exports = nextConfig
