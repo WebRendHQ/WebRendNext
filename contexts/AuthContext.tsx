@@ -9,23 +9,37 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
 
-const AuthContext = createContext<{ user: User | null }>({ user: null })
+interface AuthContextType {
+  user: User | null;
+}
 
-export const AuthProvider: React.FC = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null)
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+interface AuthProviderProps {
+  children: React.ReactNode;
+}
+
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user)
-    })
-    return unsubscribe
-  }, [])
+      setUser(user);
+    });
+    return unsubscribe;
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user }}>
       {children}
     </AuthContext.Provider>
-  )
+  );
 }
 
-export const useAuth = () => useContext(AuthContext)
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+}
