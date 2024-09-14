@@ -4,7 +4,7 @@ const nextConfig = {
     images: {
       unoptimized: true,
     },
-    // This base path should match your repository name
+    
     basePath: '/WebRendNew',
   }
   
