@@ -12,7 +12,7 @@ const Login: React.FC = () => {
   }
 
   return (
-    <button onClick={handleLogin}>Login with GitHub</button>
+    <button onClick={handleLogin}>Login with Github</button>
   )
 }
 
