@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Octokit } from '@octokit/rest';
 
 // Replace with your EC2 instance's public IP or domain
-const EC2_PUBLIC_IP = 'http://ec2-3-140-238-96.us-east-2.compute.amazonaws.com:3000';
+const EC2_PUBLIC_IP = 'https://ec2-3-140-238-96.us-east-2.compute.amazonaws.com:3000';
 
 const GitHubRepoCreatorButton: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
