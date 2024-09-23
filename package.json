@@ -13,7 +13,7 @@
         "draco3d": "^1.5.6",
         "firebase": "^10.13.1",
         "firebase-admin": "^12.5.0",
-        "next": "^14.2.11",
+        "next": "^14.2.13",
         "nextjs-github-firebase-site": "file:",
         "octokit": "^4.0.2",
         "react": "18.2.0",
