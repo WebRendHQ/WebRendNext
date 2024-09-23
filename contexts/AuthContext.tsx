@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { initializeApp } from 'firebase/app'
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth'
+import { getFirestore } from 'firebase/firestore';
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -15,12 +16,15 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
+const firestore = getFirestore(app);
+
 
 interface AuthContextType {
   user: User | null;
+  firestore: any; // Use a more specific type if available
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -33,11 +37,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
     });
+
     return unsubscribe;
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user }}>
+    <AuthContext.Provider value={{ user, firestore }}>
       {children}
     </AuthContext.Provider>
   );
