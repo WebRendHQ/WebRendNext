@@ -1,4 +1,5 @@
-/** @type {import('next').NextConfig} */
+const isProd = process.env.NODE_ENV === 'production';
+
 const nextConfig = {
   output: 'export',
   swcMinify: true,
@@ -6,8 +7,8 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
-  basePath: '/WebRendNew',
-  assetPrefix: '/WebRendNew/',
-}
-  
-  module.exports = nextConfig
+  basePath: isProd ? '/WebRendNew' : '',
+  assetPrefix: isProd ? '/WebRendNew/' : '',
+};
+
+module.exports = nextConfig;
