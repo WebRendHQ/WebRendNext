@@ -1,4 +1,3 @@
-import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import AppleLogo from '../public/apple-logo.png';
@@ -26,6 +25,9 @@ const Navbar: React.FC = () => {
             </Link>
             <Link href="/contact" className="text-gray-600 hover:text-gray-900">
               Contact
+            </Link>
+            <Link href="/login" className="text-gray-600 hover:text-gray-900">
+              Login
             </Link>
           </div>
         </nav>
