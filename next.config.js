@@ -11,8 +11,8 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
-  basePath: isProd ? '/WebRendNew' : '',
-  assetPrefix: isProd ? '/WebRendNew/' : '',
+  basePath: isProd ? '/WebRendNext' : '',
+  assetPrefix: isProd ? '/WebRendNext/' : '',
 };
 
 module.exports = nextConfig;
