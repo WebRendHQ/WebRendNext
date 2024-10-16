@@ -10,10 +10,12 @@
     },
     "dependencies": {
         "@octokit/rest": "^21.0.2",
+        "@types/firebase": "^3.2.1",
         "@types/three": "^0.168.0",
         "draco3d": "^1.5.6",
-        "firebase": "^10.13.2",
-        "firebase-admin": "^12.5.0",
+        "firebase": "^10.14.1",
+        "firebase-admin": "^12.6.0",
+        "firebase-functions": "^6.0.1",
         "next": "^14.2.13",
         "nextjs-github-firebase-site": "file:",
         "octokit": "^4.0.2",
@@ -27,7 +29,7 @@
     },
     "devDependencies": {
         "@types/jest": "^29.5.13",
-        "@types/node": "18.11.9",
+        "@types/node": "^18.11.9",
         "@types/react": "18.0.25",
         "@types/react-dom": "18.0.9",
         "autoprefixer": "^10.4.20",
