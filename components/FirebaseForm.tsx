@@ -1,6 +1,6 @@
 // Login.tsx
 import React, { useState } from 'react';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebaseConfig'; // Import the Firebase config
 
 const Login: React.FC = () => {
