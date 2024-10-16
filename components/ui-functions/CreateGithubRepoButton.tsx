@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Octokit } from '@octokit/rest';
-import { useAuth } from '../../contexts/AuthContext';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
+import { db } from '../../contexts/firebaseConfig'; // Assuming Firestore is initialized here
 
 // Replace with your EC2 instance's public IP or domain
 const EC2_PUBLIC_IP = 'https://ec2-3-140-238-96.us-east-2.compute.amazonaws.com:3000';
@@ -12,19 +13,24 @@ const GitHubRepoCreatorButton: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [domain, setDomain] = useState('');
   const [latestDomain, setLatestDomain] = useState('');
+  const [user, setUser] = useState<User | null>(null); // Track the Firebase user
+  const auth = getAuth(); // Firebase auth instance
 
-  const { user, firestore } = useAuth();
-
+  // Listen for authentication changes
   useEffect(() => {
-    if (user) {
-      fetchLatestDomain();
-    }
-  }, [user]);
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser); // Set the user state when auth state changes
+      if (currentUser) {
+        fetchLatestDomain(currentUser); // Fetch domain when the user is authenticated
+      }
+    });
 
-  const fetchLatestDomain = async () => {
-    if (!user || !firestore) return;
+    return () => unsubscribe(); // Clean up subscription on component unmount
+  }, [auth]);
+
+  const fetchLatestDomain = async (user: User) => {
     try {
-      const docRef = doc(firestore, 'users', user.uid, 'settings', 'domain');
+      const docRef = doc(db, 'users', user.uid, 'settings', 'domain');
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         setLatestDomain(docSnap.data().domain);
@@ -35,9 +41,9 @@ const GitHubRepoCreatorButton: React.FC = () => {
   };
 
   const saveDomain = async () => {
-    if (!user || !firestore) return;
+    if (!user) return;
     try {
-      await setDoc(doc(firestore, 'users', user.uid, 'settings', 'domain'), { domain });
+      await setDoc(doc(db, 'users', user.uid, 'settings', 'domain'), { domain });
       setLatestDomain(domain);
     } catch (err) {
       console.error('Error saving domain:', err);
