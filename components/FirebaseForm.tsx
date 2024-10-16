@@ -1,13 +1,15 @@
-// Login.tsx
+// firebaseForm.tsx (Login form)
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebaseConfig'; // Import the Firebase config
+import { useAuth } from '../contexts/AuthContext'; // Use the AuthContext to get auth and user
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const { user } = useAuth(); // Access the user and auth from context
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
@@ -17,6 +19,7 @@ const Login: React.FC = () => {
     setError(null);
 
     try {
+      const auth = useAuth().auth; // Get auth from context (AuthContext)
       if (isSignUp) {
         await createUserWithEmailAndPassword(auth, email, password);
       } else {
@@ -31,6 +34,7 @@ const Login: React.FC = () => {
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="mx-auto p-6 border rounded-lg shadow-lg bg-white">
+        <h2 className="mb-4 text-xl font-bold">{user ? `Welcome, ${user.displayName || user.email}` : 'Please Login or Sign Up'}</h2>
         <form onSubmit={handleEmailPasswordAuth} className="space-y-4">
           <input
             type="email"

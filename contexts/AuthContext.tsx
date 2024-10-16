@@ -1,9 +1,9 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
-import { initializeApp } from 'firebase/app'
-import { getAuth, onAuthStateChanged, User } from 'firebase/auth'
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { initializeApp } from 'firebase/app';
+import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCJM45UvPM9DPxnUy7hCfoMN2Ft4wV9o40",
   authDomain: "webrend-f3469.firebaseapp.com",
@@ -14,14 +14,14 @@ const firebaseConfig = {
   measurementId: "G-QHNJHR0KCP"
 };
 
-const app = initializeApp(firebaseConfig)
-const auth = getAuth(app)
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 const firestore = getFirestore(app);
-
 
 interface AuthContextType {
   user: User | null;
-  firestore: any; // Use a more specific type if available
+  auth: any; // Export auth here so it can be used in other components
+  firestore: any; // You can type this more specifically if you want
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -42,11 +42,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, firestore }}>
+    <AuthContext.Provider value={{ user, auth, firestore }}>
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
@@ -54,4 +54,4 @@ export const useAuth = () => {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
-}
+};
