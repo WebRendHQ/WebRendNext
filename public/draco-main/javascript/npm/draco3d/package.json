@@ -17,5 +17,8 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/google/draco.git"
+  },
+  "dependencies": {
+    "draco3d": "file:"
   }
 }
